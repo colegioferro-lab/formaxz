@@ -1,0 +1,32 @@
+const products=[
+{id:1,name:"Camiseta Essential",category:"Camisetas",price:59900,desc:"Algodón · Corte relajado",tag:"MÁS VENDIDO",image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=850&q=85"},
+{id:2,name:"Sobrecamisa Utility",category:"Chaquetas",price:149900,desc:"Textura ligera · Verde oliva",tag:"NUEVO",image:"https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=850&q=85"},
+{id:3,name:"Pantalón Relaxed",category:"Pantalones",price:119900,desc:"Pierna recta · Caqui",tag:"",image:"https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=850&q=85"},
+{id:4,name:"Chaqueta Workwear",category:"Chaquetas",price:189900,desc:"Corte estructurado · Negro",tag:"EDITOR'S PICK",image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=850&q=85"},
+{id:5,name:"Camiseta Boxy",category:"Camisetas",price:69900,desc:"Fit amplio · Blanco hueso",tag:"",image:"https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=850&q=85"},
+{id:6,name:"Denim Straight",category:"Pantalones",price:139900,desc:"Denim clásico · Azul lavado",tag:"CLÁSICO",image:"https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=850&q=85"},
+{id:7,name:"Gorra Form",category:"Accesorios",price:49900,desc:"Algodón · Perfil bajo",tag:"",image:"https://images.unsplash.com/photo-帽子"},
+{id:8,name:"Bolso Everyday",category:"Accesorios",price:89900,desc:"Práctico · Diseño minimal",tag:"",image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=850&q=85"}
+];
+products[6].image="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=850&q=85";
+const $=s=>document.querySelector(s);let filter="Todos",cart=JSON.parse(localStorage.getItem("formaCart")||"[]"),toastTimer;
+const money=n=>new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0}).format(n);
+function renderProducts(){const q=$("#searchInput").value.trim().toLocaleLowerCase("es");const shown=products.filter(p=>(filter==="Todos"||p.category===filter)&&`${p.name} ${p.category} ${p.desc}`.toLocaleLowerCase("es").includes(q));$("#productGrid").innerHTML=shown.map((p,i)=>`<article class="product-card"><div class="product-photo"><img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/700x900/e2e3da/171916?text=FORMA+Menswear'"><span class="product-no">0${p.id}</span>${p.tag?`<span class="product-label">${p.tag}</span>`:""}<button class="add-button" data-add="${p.id}">AÑADIR A LA BOLSA ＋</button></div><div class="product-info"><div><h3>${p.name}</h3><p>${p.desc}</p></div><span class="price">${money(p.price)}</span></div></article>`).join("");$("#emptyMessage").hidden=shown.length>0}
+function saveCart(){localStorage.setItem("formaCart",JSON.stringify(cart));renderCart()}
+function add(id){let x=cart.find(a=>a.id===id);x?x.qty++:cart.push({id,qty:1});saveCart();toast("AÑADIDO: "+products.find(p=>p.id===id).name)}
+function renderCart(){$("#cartCount").textContent=cart.reduce((n,x)=>n+x.qty,0);$("#cartTotal").textContent=money(cart.reduce((n,x)=>n+(products.find(p=>p.id===x.id)?.price||0)*x.qty,0));$("#cartItems").innerHTML=cart.length?cart.map(x=>{let p=products.find(y=>y.id===x.id);if(!p)return"";return`<article class="cart-item"><img src="${p.image}" alt=""><div><h3>${p.name}</h3><p>${money(p.price)}</p><div class="quantity"><button data-qty="${p.id}" data-step="-1">−</button><span>${x.qty}</span><button data-qty="${p.id}" data-step="1">＋</button></div></div><button class="remove" data-remove="${p.id}" aria-label="Eliminar">✕</button></article>`}).join(""):"<p>Tu bolsa está vacía. Encuentra algo que vaya contigo.</p>"}
+function openCart(){$("#cart").classList.add("open");$("#overlay").classList.add("open");$("#cart").setAttribute("aria-hidden","false")}
+function closeCart(){$("#cart").classList.remove("open");$("#overlay").classList.remove("open");$("#cart").setAttribute("aria-hidden","true")}
+function toast(t){$("#toast").textContent=t;$("#toast").classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("#toast").classList.remove("show"),2200)}
+$("#productGrid").addEventListener("click",e=>{let b=e.target.closest("[data-add]");if(b)add(Number(b.dataset.add))});
+$("#cartItems").addEventListener("click",e=>{let q=e.target.closest("[data-qty]"),r=e.target.closest("[data-remove]");if(q){let x=cart.find(a=>a.id===Number(q.dataset.qty));if(x)x.qty+=Number(q.dataset.step);cart=cart.filter(a=>a.qty>0);saveCart()}if(r){cart=cart.filter(a=>a.id!==Number(r.dataset.remove));saveCart()}});
+document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.filter;document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x===b));renderProducts()}));
+$("#searchInput").addEventListener("input",renderProducts);$("#openCart").addEventListener("click",openCart);$("#closeCart").addEventListener("click",closeCart);$("#overlay").addEventListener("click",closeCart);document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCart()});
+$("#checkout").addEventListener("click",()=>toast(cart.length?"DEMO: LA COMPRA NO SE HA PROCESADO":"TU BOLSA ESTÁ VACÍA"));
+$("#menuToggle").addEventListener("click",()=>$("#nav").classList.toggle("open"));document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>$("#nav").classList.remove("open")));
+$("#year").textContent=new Date().getFullYear();
+const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;let pending=false;
+function updateParallax(){document.querySelectorAll(".parallax").forEach(layer=>{const r=layer.parentElement.getBoundingClientRect(),y=(r.top+r.height/2-window.innerHeight/2)*-Number(layer.dataset.speed||.15);layer.style.setProperty("--parallax-y",`${y.toFixed(1)}px`)});pending=false}
+if(!reduced){updateParallax();window.addEventListener("scroll",()=>{if(!pending){requestAnimationFrame(updateParallax);pending=true}},{passive:true});window.addEventListener("resize",updateParallax)}
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+renderProducts();renderCart();

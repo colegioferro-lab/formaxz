@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111210">
+<title>FORMA — Menswear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"><script src="script.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="#inicio">F<span>/</span>RMA<small>MEN'S GOODS</small></a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+  <nav id="nav"><a href="#coleccion">Colección</a><a href="#editorial">Editorial</a><a href="#marca">La marca</a></nav>
+  <button class="bag-button" id="openCart">BOLSA <span id="cartCount">0</span></button>
+</header>
+<main>
+<section class="hero" id="inicio">
+  <div class="hero-image parallax" data-speed=".2"></div><div class="hero-shade"></div>
+  <div class="hero-copy reveal"><p class="eyebrow"><i></i NUEVA TEMPORADA / 2026</p><h1>VÍSTETE<br>CON <em>INTENCIÓN.</em></h1><p>Prendas esenciales. Siluetas limpias. Una forma de vestir que habla por ti.</p><a class="button" href="#coleccion">EXPLORAR COLECCIÓN <b>↘</b></a></div>
+  <div class="vertical-note">MENOS RUIDO. MÁS ESTILO.</div><div class="hero-index">01 — 04 <span> / FORMA STUDIO</span></div>
+  <div class="hero-circle">BUILT<br>FOR<br><em>EVERYDAY</em><b>✳</b></div>
+</section>
+<div class="ticker"><div>BUEN CORTE. BUEN TEJIDO. BUEN ESTILO. ✳ EVERYDAY UNIFORM. ✳ BUEN CORTE. BUEN TEJIDO. BUEN ESTILO. ✳ EVERYDAY UNIFORM. ✳</div></div>
+<section class="collection section" id="coleccion">
+  <div class="section-top reveal"><div><p class="eyebrow dark"><i></i> LA SELECCIÓN</p><h2>PIEZAS PARA<br><em>VIVIR EN ELLAS.</em></h2></div><p class="intro">Una colección versátil de básicos elevados y prendas con carácter. Combina a tu manera; el estilo es tuyo.</p></div>
+  <div class="shop-controls"><div class="filters"><button class="filter active" data-filter="Todos">Todo</button><button class="filter" data-filter="Camisetas">Camisetas</button><button class="filter" data-filter="Pantalones">Pantalones</button><button class="filter" data-filter="Chaquetas">Chaquetas</button><button class="filter" data-filter="Accesorios">Accesorios</button></div><label class="search">⌕ <input id="searchInput" type="search" placeholder="Buscar prendas…" aria-label="Buscar prendas"></label></div>
+  <div class="product-grid" id="productGrid"></div><p class="empty" id="emptyMessage" hidden>No encontramos esa prenda. Prueba otra búsqueda.</p>
+</section>
+<section class="editorial" id="editorial"><div class="editorial-image parallax" data-speed=".13"></div><div class="editorial-shade"></div><div class="editorial-copy reveal"><p class="eyebrow"><i></i> EL UNIFORME DE CADA DÍA</p><h2>MENOS,<br>PERO <em>MEJOR.</em></h2><p>Diseñamos para el ritmo real de la vida: comodidad, textura y cortes que se sienten tan bien como se ven.</p><a href="#coleccion" class="line-link">ENCUENTRA TU FIT <span>↗</span></a></div><div class="editorial-stamp">FORM<br>FOLLOWS<br>FEELING.</div></section>
+<section class="values" id="marca"><div class="value-heading reveal"><p class="eyebrow dark"><i></i> NUESTRA FILOSOFÍA</p><h2>EL ESTILO ESTÁ<br>EN LOS <em>DETALLES.</em></h2></div><div class="value-list"><article class="value reveal"><span>01 /</span><div><h3>DISEÑO SIN EXCESOS</h3><p>Prendas fáciles de combinar y difíciles de dejar de usar.</p></div><b>↗</b></article><article class="value reveal"><span>02 /</span><div><h3>TEXTURAS QUE HABLAN</h3><p>Materiales y acabados elegidos para acompañarte.</p></div><b>↗</b></article><article class="value reveal"><span>03 /</span><div><h3>HECHO PARA TU RITMO</h3><p>Del plan de la mañana a lo que surja por la noche.</p></div><b>↗</b></article></div></section>
+</main>
+<footer><div class="footer-main"><a class="logo" href="#inicio">F<span>/</span>RMA<small>MEN'S GOODS</small></a><p>ENCUENTRA TU<br><em>PROPIA FORMA.</em></p><a class="line-link" href="mailto:hola@forma.example">HABLEMOS ↗</a></div><div class="footer-bottom"><span>© <span id="year"></span> FORMA STUDIO</span><span>HECHO PARA EL DÍA A DÍA.</span><a href="#inicio">VOLVER ARRIBA ↑</a></div></footer>
+<div class="overlay" id="overlay"></div><aside class="cart" id="cart" aria-hidden="true"><div class="cart-head"><div><p class="eyebrow dark">TU SELECCIÓN</p><h2>LA BOLSA<span> /</span></h2></div><button id="closeCart" aria-label="Cerrar bolsa">✕</button></div><div class="cart-items" id="cartItems"></div><div class="cart-total"><p>SUBTOTAL <strong id="cartTotal">$0</strong></p><button class="button checkout" id="checkout">CONTINUAR <b>↗</b></button><small>Demostración: no se realizan compras ni pagos reales.</small></div></aside><div class="toast" id="toast" role="status"></div>
+</body></html>
